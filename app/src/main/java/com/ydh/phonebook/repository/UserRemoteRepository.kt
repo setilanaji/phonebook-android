@@ -18,4 +18,5 @@ class UserRemoteRepository (private val service: UserService){
     fun userRegister(bodyRegistration: BodyRegistration): Call<ResponseModel<String>>{
         return service.userRegister(bodyRegistration)
     }
+
 }
