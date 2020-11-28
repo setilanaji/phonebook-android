@@ -8,5 +8,5 @@ data class ResponseModel <T> (
     @SerializedName("status")
     val status: Boolean,
     @SerializedName("message")
-    val message: String
+    val message: String,
 )

@@ -1,5 +1,6 @@
 package com.ydh.phonebook.service
 
+import com.ydh.phonebook.model.BodyRegistration
 import com.ydh.phonebook.model.LoginBody
 import com.ydh.phonebook.model.ResponseModel
 import com.ydh.phonebook.model.UserModel
@@ -15,10 +16,10 @@ interface UserService {
         loginBody: LoginBody
     ): Call<ResponseModel<UserModel>>
 
-//    @POST("api/v1/signup")
-//    fun userRegister(
-//        @Body
-//        registration: BodyRegistration
-//    ): Call<ResponseModel<String>>
+    @POST("api/v1/signup")
+    fun userRegister(
+        @Body
+        registration: BodyRegistration
+    ): Call<ResponseModel<String>>
 
 }

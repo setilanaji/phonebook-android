@@ -3,36 +3,45 @@ package com.ydh.phonebook
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import com.ydh.phonebook.contract.LoginContract
+import com.ydh.phonebook.databinding.ActivityMainBinding
 import com.ydh.phonebook.model.ContactModel
 import com.ydh.phonebook.model.LoginBody
+import com.ydh.phonebook.model.UserModel
+import com.ydh.phonebook.presenter.LoginPresenter
 import com.ydh.phonebook.repository.ContactRemoteRepository
 import com.ydh.phonebook.repository.UserRemoteRepository
 import com.ydh.phonebook.service.ContactService
 import com.ydh.phonebook.service.UserService
 
-class MainActivity : AppCompatActivity(), LoginContract.View {
+class MainActivity : AppCompatActivity() {
 
-    private val service: UserService by lazy { Api.userService }
-    private val contactService: ContactService by lazy { Api.contactService }
-    private val repositoryUser: UserRemoteRepository by lazy { UserRemoteRepository(service) }
-    private val repositoryContact: ContactRemoteRepository by lazy { ContactRemoteRepository(contactService) }
-    private val presenter: LoginPresenter by lazy { LoginPresenter(this, repositoryUser, repositoryContact) }
+    private lateinit var navigationController: NavController
+    lateinit var binding: ActivityMainBinding
+
+    private val prefs: UserSession by lazy {
+        UserSession(App.instance)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        presenter.userLogin(LoginBody("l200140004@gmail.com", "l200140004"))
-        presenter.getAllContact()
+        navigationController =  this.findNavController(R.id.navHostFragment)
 
+        if (prefs.loggedIn){
+            navigationController.navigate(R.id.homeFragment)
+        }else{
+            navigationController.navigate(R.id.loginFragment)
+        }
 
     }
 
-    override fun onSuccessLogin(token: String) {
-        Toast.makeText(this, "Check $token", Toast.LENGTH_LONG).show()
+    override fun onSupportNavigateUp(): Boolean {
+        return super.onSupportNavigateUp()
     }
 
-    override fun onSuccessGetContact(list: List<ContactModel>) {
-        println("Test out $list")
-    }
+
 }

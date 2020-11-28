@@ -17,4 +17,8 @@ data class ContactModel (
     var email : String,
     @SerializedName("userId")
     val userId: Int,
+    @SerializedName("image")
+    var image: String?,
+    @SerializedName("imageName")
+    var imageName: String?,
 )
