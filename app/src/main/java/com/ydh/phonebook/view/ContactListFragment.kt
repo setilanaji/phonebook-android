@@ -66,8 +66,8 @@ class ContactListFragment : Fragment(), ContactContract.View, ContactAdapter.Con
             itemTouchHelper.attachToRecyclerView(rvContactList)
 
             btAdd.setOnClickListener {
-                onFailed("Add new")
-//                presenter.insertTodo(tieTodo.text.toString())
+                val action = ContactListFragmentDirections.actionContactListFragmentToAddContactFragment(null, "ADD")
+                findNavController().navigate(action)
             }
         }
     }
@@ -88,6 +88,15 @@ class ContactListFragment : Fragment(), ContactContract.View, ContactAdapter.Con
     override fun onSuccessDeleteContact(message: String, id: Int) {
         Toast.makeText(context, message, Toast.LENGTH_LONG ).show()
         adapter.deleteContact(id)
+        onResume()
+    }
+
+    override fun onSuccessAddContact(message: String, contactModel: ContactModel) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSuccessUpdateContact(message: String, contactModel: ContactModel) {
+        TODO("Not yet implemented")
     }
 
     override fun loading() {
@@ -95,9 +104,7 @@ class ContactListFragment : Fragment(), ContactContract.View, ContactAdapter.Con
     }
 
     override fun onClick(contact: ContactModel) {
-        val bundle = bundleOf("contact" to contact)
-
-        val action = ContactListFragmentDirections.actionContactListFragmentToContactDetailFragment(contact)
+        val action = ContactListFragmentDirections.actionContactListFragmentToContactDetailFragment(contact, status = "ADD")
         findNavController().navigate(action)
     }
 

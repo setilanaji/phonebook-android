@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.ydh.phonebook.R
 import com.ydh.phonebook.databinding.FragmentContactDetailBinding
@@ -25,9 +26,6 @@ class ContactDetailFragment : Fragment() {
 
         binding = FragmentContactDetailBinding.inflate(inflater, container, false)
 
-
-
-
         setView()
 
         return binding.root
@@ -39,6 +37,11 @@ class ContactDetailFragment : Fragment() {
             arguments?.let {
                 val args = ContactDetailFragmentArgs.fromBundle(it)
                 binding.contact = args.contact
+            }
+
+            btDetailEdit.setOnClickListener {
+                val action = ContactDetailFragmentDirections.actionContactDetailFragmentToAddContactFragment(binding.contact, status = "DONE")
+                findNavController().navigate(action)
             }
         }
     }

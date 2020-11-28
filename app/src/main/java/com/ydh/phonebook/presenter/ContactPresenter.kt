@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.ydh.phonebook.App
 import com.ydh.phonebook.UserSession
 import com.ydh.phonebook.contract.ContactContract
+import com.ydh.phonebook.model.BodyAddContact
 import com.ydh.phonebook.model.ContactModel
 import com.ydh.phonebook.model.ErrorResponseModel
 import com.ydh.phonebook.model.ResponseModel
@@ -24,7 +25,6 @@ class ContactPresenter(private val view: ContactContract.View, private val repos
                 call: Call<ResponseModel<List<ContactModel>>>,
                 response: Response<ResponseModel<List<ContactModel>>>
             ) {
-                println(response.body())
 
                 if (response.code() == 200){
                     view.onSuccessGetContact(response.body()!!.data)
@@ -52,7 +52,6 @@ class ContactPresenter(private val view: ContactContract.View, private val repos
                     call: Call<ResponseModel<String>>,
                     response: Response<ResponseModel<String>>
             ) {
-                println(response.body())
 
                 if (response.code() == 200){
                     view.onSuccessDeleteContact(response.body()!!.data, position)
@@ -73,4 +72,57 @@ class ContactPresenter(private val view: ContactContract.View, private val repos
 
         })
     }
+
+    override fun addContact(bodyAddContact: BodyAddContact) {
+        repository.addContact(prefs.token!!, bodyAddContact).enqueue(object : Callback<ResponseModel<ContactModel>> {
+            override fun onResponse(
+                call: Call<ResponseModel<ContactModel>>,
+                response: Response<ResponseModel<ContactModel>>
+            ) {
+
+                if (response.code() == 200){
+                    view.onSuccessAddContact(response.body()!!.message, response.body()!!.data)
+                }else {
+                    if (response.errorBody() != null) {
+                        val gson = Gson()
+                        val message: ErrorResponseModel = gson.fromJson(response.errorBody()!!.charStream(), ErrorResponseModel::class.java)
+
+                        view.onFailed(message.data)
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseModel<ContactModel>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    override fun updateContact(id: Int, bodyAddContact: BodyAddContact) {
+        repository.updateContact(prefs.token!!,id, bodyAddContact).enqueue(object : Callback<ResponseModel<ContactModel>> {
+            override fun onResponse(
+                call: Call<ResponseModel<ContactModel>>,
+                response: Response<ResponseModel<ContactModel>>
+            ) {
+
+                if (response.code() == 200){
+                    view.onSuccessUpdateContact(response.body()!!.message, response.body()!!.data)
+                }else {
+                    if (response.errorBody() != null) {
+                        val gson = Gson()
+                        val message: ErrorResponseModel = gson.fromJson(response.errorBody()!!.charStream(), ErrorResponseModel::class.java)
+
+                        view.onFailed(message.data)
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseModel<ContactModel>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })    }
 }
