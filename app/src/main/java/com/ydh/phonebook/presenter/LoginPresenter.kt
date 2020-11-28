@@ -39,7 +39,7 @@ class LoginPresenter(private val view: LoginContract.View, private val repositor
 
                         prefs.loggedIn = true
 
-                        view.onSuccessLogin(user, response.body()!!.message)
+                        view.onSuccessLogin( response.body()!!.message)
                     }
 
                 } else {

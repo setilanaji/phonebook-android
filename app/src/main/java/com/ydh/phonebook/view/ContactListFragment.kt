@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.ydh.phonebook.Api
@@ -88,8 +90,15 @@ class ContactListFragment : Fragment(), ContactContract.View, ContactAdapter.Con
         adapter.deleteContact(id)
     }
 
-    override fun onClick(todoModel: ContactModel) {
+    override fun loading() {
         TODO("Not yet implemented")
+    }
+
+    override fun onClick(contact: ContactModel) {
+        val bundle = bundleOf("contact" to contact)
+
+        val action = ContactListFragmentDirections.actionContactListFragmentToContactDetailFragment(contact)
+        findNavController().navigate(action)
     }
 
     override fun onDelete(id: Long) {

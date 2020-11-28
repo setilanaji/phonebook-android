@@ -7,8 +7,11 @@ import com.ydh.phonebook.model.UserModel
 interface LoginContract {
 
     interface View{
-        fun onSuccessLogin(userModel: UserModel, message: String)
+        fun onSuccessLogin( message: String)
         fun onFailedLogin(message: String)
+
+        fun loading()
+
     }
 
     interface Presenter{

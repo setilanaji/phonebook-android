@@ -10,6 +10,9 @@ interface ContactContract {
         fun onSuccessGetContact(list: List<ContactModel>)
         fun onFailed(message: String)
         fun onSuccessDeleteContact(message: String, id: Int)
+
+        fun loading()
+
     }
 
     interface Presenter{

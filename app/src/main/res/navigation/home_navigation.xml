@@ -14,10 +14,17 @@
             android:id="@+id/action_contactListFragment_to_contactDetailFragment"
             app:destination="@id/contactDetailFragment"
             app:popUpTo="@id/contactListFragment" />
+        <argument
+            android:name="contact"
+            app:argType="com.ydh.phonebook.model.ContactModel" />
     </fragment>
     <fragment
         android:id="@+id/contactDetailFragment"
         android:name="com.ydh.phonebook.view.ContactDetailFragment"
         android:label="fragment_contact_detail"
-        tools:layout="@layout/fragment_contact_detail" />
+        tools:layout="@layout/fragment_contact_detail" >
+        <argument
+            android:name="contact"
+            app:argType="com.ydh.phonebook.model.ContactModel" />
+    </fragment>
 </navigation>

@@ -1,5 +1,6 @@
 package com.ydh.phonebook.repository
 
+import com.ydh.phonebook.model.BodyRegistration
 import com.ydh.phonebook.model.LoginBody
 import com.ydh.phonebook.model.ResponseModel
 import com.ydh.phonebook.model.UserModel
@@ -12,5 +13,9 @@ class UserRemoteRepository (private val service: UserService){
 
     fun userLogin(loginBody: LoginBody): Call<ResponseModel<UserModel>>{
         return service.userLogin(loginBody)
+    }
+
+    fun userRegister(bodyRegistration: BodyRegistration): Call<ResponseModel<String>>{
+        return service.userRegister(bodyRegistration)
     }
 }

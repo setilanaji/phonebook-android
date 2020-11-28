@@ -46,7 +46,7 @@ class ContactPresenter(private val view: ContactContract.View, private val repos
         })
     }
 
-    override fun deleteContact(contactModel: ContactModel, pos: Int) {
+    override fun deleteContact(contactModel: ContactModel, position: Int) {
         repository.deleteContact(prefs.token!!, contactModel.id).enqueue(object : Callback<ResponseModel<String>> {
             override fun onResponse(
                     call: Call<ResponseModel<String>>,
@@ -55,7 +55,7 @@ class ContactPresenter(private val view: ContactContract.View, private val repos
                 println(response.body())
 
                 if (response.code() == 200){
-                    view.onSuccessDeleteContact(response.body()!!.data, pos)
+                    view.onSuccessDeleteContact(response.body()!!.data, position)
                 }else {
                     if (response.errorBody() != null) {
                         val gson = Gson()

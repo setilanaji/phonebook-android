@@ -1,7 +1,10 @@
 package com.ydh.phonebook.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class UserModel (
     @SerializedName("id")
     val id: Int,
@@ -13,4 +16,4 @@ data class UserModel (
     val token: String,
     @SerializedName("password")
     val password: String
-)
+): Parcelable

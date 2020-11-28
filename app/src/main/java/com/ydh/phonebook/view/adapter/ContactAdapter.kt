@@ -104,9 +104,9 @@ class ContactAdapter(
     }
 
     interface ContactListerner {
-        fun onClick(todoModel: ContactModel)
+        fun onClick(contactModel: ContactModel)
         fun onDelete(id: Long)
-        fun onChange(todoModel: ContactModel)
+        fun onChange(contactModel: ContactModel)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -149,6 +149,9 @@ class ContactAdapter(
             }
 
             this.binding = itemBinding
+            this.itemBinding.ivItemUserProfile.setOnClickListener {
+                listener.onClick(itemBinding.user!!)
+            }
 
 //            itemBinding.ivFavTodo.setOnClickListener{
 //                if (itemBinding.ivFavTodo.isChecked){

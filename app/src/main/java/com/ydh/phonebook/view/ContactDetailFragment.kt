@@ -15,8 +15,15 @@ class ContactDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
+
+        arguments?.let {
+            val args = ContactDetailFragmentArgs.fromBundle(it)
+            val contact = args.contact
+            println("Safe Argument Received=${contact}")
+        }
         return inflater.inflate(R.layout.fragment_contact_detail, container, false)
+
     }
 
 }

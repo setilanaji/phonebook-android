@@ -40,9 +40,12 @@ class LoginFragment : Fragment(), LoginContract.View {
             btLogLogin.setOnClickListener {
                 presenter.userLogin(LoginBody(etLoginUserEmail.text.toString(), etLoginUserPassword.text.toString()))
             }
+            btLogToRegister.setOnClickListener {
+                findNavController().navigate(R.id.registerFragment)
+            }
         }
     }
-    override fun onSuccessLogin(userModel: UserModel, message: String) {
+    override fun onSuccessLogin( message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.homeFragment)
 
@@ -50,6 +53,10 @@ class LoginFragment : Fragment(), LoginContract.View {
 
     override fun onFailedLogin(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun loading() {
+        TODO("Not yet implemented")
     }
 
 
